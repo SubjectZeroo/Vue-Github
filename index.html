@@ -14,6 +14,11 @@
     <div id="app">
         <!-- Favorites -->
         <div class="favorites">
+          <div class="favorite" v-for="favorite in allFavorites">
+            <a @click.prevent="showFavorite(favorite)" href="#" target="_blank">
+              <img :src="favorite.avatar_url" :alt="favorite.name" class="favorite__avatar">
+            </a>
+          </div>
         </div>
 
         <!-- Content -->
@@ -28,16 +33,19 @@
 
             <!-- Result -->
             <div class="result" v-if="result">
-              <h2 class="result__name"></h2>
-              <img src="" alt="" class="result__avatar">
-              <p class="result__bio">
+              <a href="#" class="result__toggle-favorite" @click="addFavorite">Add Favorite</a>
+              <a v-if="isFavorite" href="#" class="result__toggle-favorite" @click="removeFavorite">Remove Favorite</a>
+
+              <h2 class="result__name">{{ result.name }}</h2>
+              <img v-bind:src="result.avatar_url" :alt="result.name" class="result__avatar">
+              <p class="result__bio"> {{ result.bio }}
                 <br>
-                <a a href="" class="result__blog"></a>
+                <a v-bind:href="result.blog" class="result__blog">{{ result.blog }}</a>
               </p>
             </div>
             <p v-else>Waiting for search...</p>
             <!-- Error -->
-            <div class="result__error" v-if="error">Error found</div>
+            <div class="result__error" v-if="error">{{ error }}</div>
         </article>
     </div>
     <script src="js/main.js"></script>
